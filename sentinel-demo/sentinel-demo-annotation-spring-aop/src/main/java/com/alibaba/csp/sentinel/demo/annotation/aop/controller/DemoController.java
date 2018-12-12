@@ -15,11 +15,21 @@
  */
 package com.alibaba.csp.sentinel.demo.annotation.aop.controller;
 
+import com.alibaba.csp.sentinel.Entry;
+import com.alibaba.csp.sentinel.EntryType;
+import com.alibaba.csp.sentinel.SphU;
+import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.demo.annotation.aop.service.TestService;
 
+import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 /**
  * @author Eric Zhao
@@ -35,4 +45,26 @@ public class DemoController {
         service.test();
         return service.hello(System.currentTimeMillis());
     }
+
+//    @GetMapping("/iptest")
+//    public String ipTest(HttpServletRequest request, HttpResponse response){
+//
+//        String address = request.getRemoteAddr();
+//        Entry entry = null;
+//        try {
+//            entry = SphU.entry("iptest", EntryType.IN, 1, address);
+//            return service.ipTest(address);
+//        } catch (BlockException ex) {
+//            ex.printStackTrace();
+//        } catch (Throwable ex) {
+//            Tracer.trace(ex);
+//            throw ex;
+//        } finally {
+//            if (entry != null) {
+//                entry.exit();
+//            }
+//        }
+//        return null;
+//    }
+
 }
